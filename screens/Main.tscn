@@ -1,0 +1,108 @@
+[gd_scene load_steps=11 format=2]
+
+[ext_resource path="res://scripts/Main.gd" type="Script" id=1]
+[ext_resource path="res://screens/Tower.tscn" type="PackedScene" id=2]
+[ext_resource path="res://scripts/path1.gd" type="Script" id=3]
+[ext_resource path="res://screens/enemy.tscn" type="PackedScene" id=4]
+[ext_resource path="res://screens/EndPos.tscn" type="PackedScene" id=5]
+[ext_resource path="res://img/dat.png" type="Texture" id=6]
+[ext_resource path="res://screens/Bulllet.tscn" type="PackedScene" id=7]
+
+[sub_resource type="TileSet" id=3]
+0/name = "dat.png 0"
+0/texture = ExtResource( 6 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 0, 0, 64, 64 )
+0/tile_mode = 0
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/shapes = [  ]
+0/z_index = 0
+
+[sub_resource type="Curve2D" id=1]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 1.68866, 286.974, 0, 0, 0, 0, 348.479, 279.799, 0, 0, 0, 0, 350.871, 102.816, 0, 0, 0, 0, 671.353, 98.0325, 0, 0, 0, 0, 671.353, 289.365, 0, 0, 0, 0, 1451.03, 289.365 )
+}
+
+[sub_resource type="Curve2D" id=2]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, -5.48633, 289.365, 0, 0, 0, 0, 346.087, 284.582, 0, 0, 0, 0, 353.262, 411.34, 0, 0, 0, 0, 671.353, 413.731, 0, 0, 0, 0, 668.961, 291.757, 0, 0, 0, 0, 1446.25, 284.582 )
+}
+
+[node name="Main" type="Node2D"]
+script = ExtResource( 1 )
+Tower = ExtResource( 2 )
+EndPos = ExtResource( 5 )
+Bullet = ExtResource( 7 )
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource( 3 )
+format = 1
+tile_data = PoolIntArray( 65541, 0, 0, 65542, 0, 0, 65543, 0, 0, 65544, 0, 0, 65545, 0, 0, 65546, 0, 0, 131077, 0, 0, 131082, 0, 0, 196613, 0, 0, 196618, 0, 0, 262144, 0, 0, 262145, 0, 0, 262146, 0, 0, 262147, 0, 0, 262148, 0, 0, 262149, 0, 0, 262154, 0, 0, 262155, 0, 0, 262156, 0, 0, 262157, 0, 0, 262158, 0, 0, 262159, 0, 0, 262160, 0, 0, 327685, 0, 0, 327690, 0, 0, 393221, 0, 0, 393222, 0, 0, 393223, 0, 0, 393224, 0, 0, 393225, 0, 0, 393226, 0, 0 )
+
+[node name="Position" type="Node2D" parent="."]
+
+[node name="StartPos1" type="Position2D" parent="Position"]
+position = Vector2( 87.9044, 545.007 )
+
+[node name="StartPos2" type="Position2D" parent="Position"]
+position = Vector2( 274.262, 541.491 )
+
+[node name="StartPos3" type="Position2D" parent="Position"]
+position = Vector2( 467.651, 543.249 )
+
+[node name="StartPos4" type="Position2D" parent="Position"]
+position = Vector2( 629.395, 545.007 )
+
+[node name="StartPos5" type="Position2D" parent="Position"]
+position = Vector2( 803.446, 537.975 )
+
+[node name="EndPos1" type="Position2D" parent="Position"]
+position = Vector2( 184.599, 179.325 )
+
+[node name="EndPos2" type="Position2D" parent="Position"]
+position = Vector2( 185.091, 383.834 )
+
+[node name="EndPos3" type="Position2D" parent="Position"]
+position = Vector2( 518.636, 253.165 )
+
+[node name="EndPos4" type="Position2D" parent="Position"]
+position = Vector2( 801.688, 167.018 )
+
+[node name="EndPos5" type="Position2D" parent="Position"]
+position = Vector2( 797.538, 384.182 )
+
+[node name="path1" type="Path2D" parent="."]
+curve = SubResource( 1 )
+script = ExtResource( 3 )
+Enemy = ExtResource( 4 )
+
+[node name="path2" type="Path2D" parent="."]
+curve = SubResource( 2 )
+script = ExtResource( 3 )
+Enemy = ExtResource( 4 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.5
+
+[node name="GUI" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Play" type="Button" parent="GUI"]
+margin_left = 423.323
+margin_top = 2.39166
+margin_right = 575.323
+margin_bottom = 70.3917
+text = "Start Game"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tween" type="Tween" parent="."]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="pressed" from="GUI/Play" to="." method="_on_Play_pressed"]
